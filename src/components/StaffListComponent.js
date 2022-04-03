@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 export default class StaffList extends Component {
   constructor(props) {
@@ -14,8 +14,32 @@ export default class StaffList extends Component {
     this.setState({ selectedStaff: staff });
   }
 
+  renderStaff(staff) {
+    if (staff != null) {
+      return (
+        <div className='col-12 col-md-6 col-lg-4'>
+          <Card>
+            <CardImg top width="100%" src={staff.image} alt={staff.name} />
+            <CardBody>
+              <CardTitle>{staff.name}</CardTitle>
+              <CardText>Ngày sinh: {staff.doB}</CardText>
+              <CardText>Ngày vào công ty: {staff.startDate}</CardText>
+              <CardText>Phòng ban: {staff.department.name}</CardText>
+              <CardText>Số ngày nghỉ còn lại: {staff.annualLeave}</CardText>
+              <CardText>Số ngày đã làm thêm: {staff.overTime}</CardText>
+              <CardText>Bậc lương: {staff.salaryScale}</CardText>
+            </CardBody>
+          </Card>
+        </div>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    }
+  }
+
   render() {
-    // chu y chua co list staff nen staff chua co staff.name, staff.id, props staff
     const staff = this.props.staffs.map((staff) => {
       return (
         <div key={staff.id} className='col-12 col-md-6 col-lg-4'>
@@ -29,11 +53,13 @@ export default class StaffList extends Component {
     });
 
     return (
-      // cho tung card vao, cac card se hien thi tren desktop, tablet, mobile tuong ung 3, 2, 1 cot
-      // cho vao giua cac card la thoong tin cua tung nhan vien, sau do xu ly click bang ham click
       <div className='container-fluid'>
         <div className='row'>
           {staff}
+        </div>
+        <p>Bấm vào tên nhân viên để xem thông tin</p>
+        <div className='row'>
+          {this.renderStaff(this.state.selectedStaff)}
         </div>
       </div>
     );
