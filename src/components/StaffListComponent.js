@@ -61,7 +61,9 @@ export default class StaffList extends Component {
           </div>
         </div>
       );
-    } else {return (<div></div>)}
+    } else {
+      return (<div></div>);
+    }
   }
 
   render() {
