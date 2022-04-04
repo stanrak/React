@@ -86,12 +86,12 @@ export default class StaffList extends Component {
             </div>
             <div className='d-flex align-items-center'>
               <div className='row'>
-                <Button onClick={() => this.gridSelect("reset")}>Reset</Button>
-                <Button onClick={() => this.gridSelect("1-cols")}>1 cột</Button>
-                <Button onClick={() => this.gridSelect("2-cols")}>2 cột</Button>
-                <Button onClick={() => this.gridSelect("3-cols")}>3 cột</Button>
-                <Button onClick={() => this.gridSelect("4-cols")}>4 cột</Button>
-                <Button onClick={() => this.gridSelect("6-cols")}>6 cột</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("reset")}>Reset</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("1-cols")}>1 cột</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("2-cols")}>2 cột</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("3-cols")}>3 cột</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("4-cols")}>4 cột</Button>
+                <Button className='m-2' onClick={() => this.gridSelect("6-cols")}>6 cột</Button>
               </div>
             </div>
           </div>
