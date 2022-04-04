@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle, ButtonGroup, Button } from 'reactstrap';
 import dateFormat from 'dateformat';
 
 export default class StaffList extends Component {
@@ -54,13 +54,36 @@ export default class StaffList extends Component {
     });
 
     return (
-      <div className='container-fluid'>
-        <div className='row'>
-          {staff}
+      <div>
+        <div className='container-fluid'>
+          <div className='row justify-content-between'>
+            <div className='col-12 col-md-6 col-lg-4 d-flex align-items-center'>
+              <span>Danh sách nhân viên</span>
+            </div>
+            <div className='col-12 col-md-6 col-lg-4'>
+              <ButtonGroup>
+                <Button>1 cột</Button>
+                <Button>2 cột</Button>
+                <Button>3 cột</Button>
+                <Button>4 cột</Button>
+                <Button>6 cột</Button>
+              </ButtonGroup>
+            </div>
+          </div>
+          <div className='row'>
+            {staff}
+          </div>
+          <div>
+            <span>Bấm vào tên nhân viên để xem thông tin</span>
+          </div>
         </div>
-        <p>Bấm vào tên nhân viên để xem thông tin</p>
-        <div className='row'>
-          {this.renderStaff(this.state.selectedStaff)}
+        <div className='container-fluid'>
+          <div>
+            <span>Thông tin ứng viên</span>
+          </div>
+          <div className='row'>
+            {this.renderStaff(this.state.selectedStaff)}
+          </div>
         </div>
       </div>
     );
