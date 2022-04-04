@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className='bg-primary d-flex p-3 text-white align-items-center' style={{height:'3vw'}}>
-          <span>Ứng dụng quản lý nhân sự v1.0</span>
+          <span className='m-4'>Ứng dụng quản lý nhân sự v1.0</span>
         </div>
         <div className='container-fluid'>
           <StaffList staffs={this.state.staffs} />

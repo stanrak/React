@@ -3,13 +3,14 @@ import { Card, CardBody, CardImg, CardText, CardTitle, Button } from 'reactstrap
 import dateFormat from 'dateformat';
 
 const defaultGrid = 'col-12 col-md-6 col-lg-4';
+
 const GRID = {
-      "1-cols": "col-12",
-      "2-cols": "col-12 col-md-6",
-      "3-cols": "col-12 col-md-4",
-      "4-cols": "col-12 col-md-4 col-lg-3",
-      "6-cols": "col-12 col-md-4 col-lg-2"
-    }
+  "1-cols": "col-12",
+  "2-cols": "col-12 col-md-6",
+  "3-cols": "col-12 col-md-4",
+  "4-cols": "col-12 col-md-4 col-lg-3",
+  "6-cols": "col-12 col-md-4 col-lg-2"
+}
 
 export default class StaffList extends Component {
   constructor(props) {
@@ -37,7 +38,11 @@ export default class StaffList extends Component {
     if (staff != null) {
       return (
         <div>
-          <h2>Thông tin nhân viên</h2>
+          <div className='row m-3'>
+            <div className='d-flex align-items-center'>
+              <h2>Thông tin nhân viên</h2>
+            </div>
+          </div>
           <div className='row m-3'>
             <div className='col-12 col-md-6 col-lg-4'>
               <Card className="m-2">
