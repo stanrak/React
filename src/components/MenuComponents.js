@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 
 class Menu extends Component {
   constructor(props) {
@@ -16,23 +17,21 @@ class Menu extends Component {
 
   renderDish(dish) {
     if (dish != null) {
+      console.log("renderDish - menuCom: chuyen dish tu MenuCom sang DishDetail: dish");
+      console.log(dish);
+      
       return (
-        <Card>
-          <CardImg width="100%" src={dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
+        <div>
+          <DishDetail dish />
+        </div>
       );
-    } else {
-      return (
-        <div></div>
-      );
-    }
+    } else {return (<div></div>)}
   }
 
   render() {
+    console.log("chuyen dish array tu app ve menu component: props, props.dishes");
+    console.log(this.props);
+    console.log(this.props.dishes);
 
     const menu = this.props.dishes.map((dish) => {
       return (
@@ -48,14 +47,12 @@ class Menu extends Component {
     });
 
     return (
-      <div className='container'>
+      <div className = 'container' >
         <div className='row'>
           {menu}
         </div>
-        <div className='=row'>
-          <div className="col-12 col-md-5 m-1">
-            {this.renderDish(this.state.selectedDish)}
-          </div>
+        <div className='row'>
+          {this.renderDish(this.state.selectedDish)}
         </div>
       </div>
     );
