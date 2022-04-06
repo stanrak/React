@@ -14,19 +14,25 @@ export default class DishDetail extends Component {
     );
   }
 
-  renderComment(dish) {
-    console.log(dish);
-    console.log(dish.comments);
-
-    dish.comments.map((comt) => {
-      console.log(comt);
+  renderComment(comments) {
+    const customerCmt = comments.map((cmt) => {
       return (
-        <div key={comt.id}>
-          {comt.comment}
-          {comt.author}
+        <div key={cmt.id}>
+          <CardText className="my-3">{cmt.comment}</CardText>
+          <CardText className="my-3">- {cmt.author}</CardText>
         </div>
       );
     });
+
+    return (
+      <Card>
+        <CardBody>
+          <CardTitle>Comments</CardTitle>
+          <CardText>All comments for this Dish</CardText>
+          {customerCmt}
+        </CardBody>
+      </Card>
+    );
   }
 
   render() {
@@ -36,13 +42,7 @@ export default class DishDetail extends Component {
           {this.renderDish(this.props.dish)}
         </div>
         <div className="col-12 col-md-5 m-1">
-          <Card>
-            <CardBody>
-              <CardTitle>Comments</CardTitle>
-              <CardText>All comments for this Dish</CardText>
-              <CardText>{this.renderComment(this.props.dish)}</CardText>
-            </CardBody>
-          </Card>
+          {this.renderComment(this.props.dish.comments)}
         </div>
       </div>
     );
