@@ -14,18 +14,24 @@ export default class DishDetail extends Component {
     );
   }
 
-  renderComment(dish) {
-    const customerComment = dish.comments.map((comt) => {
+  renderComment(comments) {
+    const customerCmt = comments.map((cmt) => {
       return (
-        <div key={comt.id}>
-          <CardText className="my-3"><blockquote class="blockquote">{comt.comment}</blockquote></CardText>
-          <CardText className="my-3">- {comt.author} | Rating: {comt.rating} | {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comt.date)))}</CardText>
+        <div key={cmt.id}>
+          <CardText className="my-3"><blockquote className="blockquote">{cmt.comment}</blockquote></CardText>
+          <CardText className="my-3">- {cmt.author} | Rating: {cmt.rating} | {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmt.date)))}</CardText>
         </div>
       );
     });
 
     return (
-      <div>{customerComment}</div>
+      <Card>
+        <CardBody>
+          <CardTitle>Comments</CardTitle>
+          <CardText>All comments for this Dish</CardText>
+          {customerCmt}
+        </CardBody>
+      </Card>
     );
   }
 
@@ -38,13 +44,7 @@ export default class DishDetail extends Component {
             {this.renderDish(this.props.dish)}
           </div>
           <div className="col-12 col-md-5 m-1">
-            <Card>
-              <CardBody>
-                <CardTitle>Comments</CardTitle>
-                <CardText>All comments for this Dish</CardText>
-                {this.renderComment(this.props.dish)}
-              </CardBody>
-            </Card>
+            {this.renderComment(this.props.dish.comments)}
           </div>
         </div>
       </div>
