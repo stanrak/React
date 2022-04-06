@@ -3,10 +3,6 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
 
 export default class DishDetail extends Component {
   renderDish(dish) {
-    console.log("renderDish: chuyen dish tu render sang rendderDish: props, dish");
-    console.log(this.props);
-    console.log(this.props.dish);
-
     return (
       <Card>
         <CardImg width="100%" src={dish.image} alt={dish.name} />
@@ -19,27 +15,23 @@ export default class DishDetail extends Component {
   }
 
   renderComment(dish) {
-    console.log("renderCommment: chuyen dish tu render sang rendercomment: props, dish (khong phai props.dish)");
-    console.log(this.props);
     console.log(dish);
+    console.log(dish.comments);
 
     dish.comments.map((comt) => {
+      console.log(comt);
       return (
-        <li>
-          <CardText>{comt.comment}</CardText>
-          <CardText>{comt.author}</CardText>
-        </li>
+        <div key={comt.id}>
+          {comt.comment}
+          {comt.author}
+        </div>
       );
     });
   }
 
   render() {
-    console.log("render: chuyen dish tu menu com sang dishDetailCom: props, props.dish");
-    console.log(this.props);
-    console.log(this.props.dish);
-
     return (
-      <div>
+      <div className='row'>
         <div className="col-12 col-md-5 m-1">
           {this.renderDish(this.props.dish)}
         </div>
@@ -48,9 +40,7 @@ export default class DishDetail extends Component {
             <CardBody>
               <CardTitle>Comments</CardTitle>
               <CardText>All comments for this Dish</CardText>
-              <ul>
-                {this.renderComment(this.props.dish)}
-              </ul>
+              <CardText>{this.renderComment(this.props.dish)}</CardText>
             </CardBody>
           </Card>
         </div>

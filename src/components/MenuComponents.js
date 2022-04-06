@@ -17,26 +17,19 @@ class Menu extends Component {
 
   renderDish(dish) {
     if (dish != null) {
-      console.log("renderDish - menuCom: chuyen dish tu MenuCom sang DishDetail: dish");
-      console.log(dish);
-      
       return (
         <div>
-          <DishDetail dish />
+          <DishDetail dish={dish} />
         </div>
       );
     } else {return (<div></div>)}
   }
-
+  
   render() {
-    console.log("chuyen dish array tu app ve menu component: props, props.dishes");
-    console.log(this.props);
-    console.log(this.props.dishes);
-
     const menu = this.props.dishes.map((dish) => {
       return (
-        <div className="col-12 col-md-5 m-1">
-          <Card key={dish.id} onClick={() => this.onDishSelect(dish)}>
+        <div key={dish.id} className="col-12 col-md-5 m-1">
+          <Card onClick={() => this.onDishSelect(dish)}>
             <CardImg width="100%" src={dish.image} alt={dish.name} />
             <CardImgOverlay>
               <CardTitle>{dish.name}</CardTitle>
@@ -51,12 +44,9 @@ class Menu extends Component {
         <div className='row'>
           {menu}
         </div>
-        <div className='row'>
-          {this.renderDish(this.state.selectedDish)}
-        </div>
+        {this.renderDish(this.state.selectedDish)}
       </div>
     );
   }
 }
-
 export default Menu;
