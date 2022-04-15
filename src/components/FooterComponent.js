@@ -10,7 +10,7 @@ function Footer(props) {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li><Link to="/staffs">Nhân viên</Link></li>
-              <li><Link to="/department">Phòng Ban</Link></li>
+              <li><Link to="/departments">Phòng Ban</Link></li>
               <li><Link to="/payroll">Bảng lương</Link></li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardImg, CardText, CardTitle, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const defaultGrid = 'col-12 col-md-6 col-lg-4';
 
@@ -34,10 +35,15 @@ export default class StaffList extends Component {
   }
 
   render() {
+    console.log('props của StaffList', this.props);
     const staff = this.props.staffs.map((staff) => {
       return (
         <div key={staff.id} className={this.state.selectedGrid}>
-          <Card className="m-2" onClick={() => this.staffSelect(staff)}>
+          
+          <Card className="m-2">
+            <Link to={`/staffs/${staff.id}`}>
+              <CardImg top width="100%"  src={staff.image} alt={staff.name} />
+            </Link>
             <CardBody>
               <CardTitle>{staff.name}</CardTitle>
             </CardBody>
