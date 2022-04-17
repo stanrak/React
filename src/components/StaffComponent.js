@@ -1,37 +1,34 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import dateFormat from 'dateformat';
-import { STAFFS } from '../shared/staffs';
+import { Link } from "react-router-dom";
 
 class RenderStaff extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    let id = this.props.match.params.staffId;
-    let staff = STAFFS.find(s => s.id === parseInt(id));
+    let staff = this.props.staff;
     return (
-      <div>
+      <div className="container-fluid">
+        <div className='row m-3'>
+          <Breadcrumb>
+            <BreadcrumbItem><Link to='/staffs'>Nhân viên</Link></BreadcrumbItem>
+            <BreadcrumbItem active>{this.props.staff.name}</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
         <div className='row m-3'>
           <div className='d-flex align-items-center'>
             <h2>Thông tin nhân viên</h2>
           </div>
         </div>
-        <div className='row m-3'>
-          <div className='col-12 col-md-6 col-lg-4'>
-            <Card className="m-2">
-              <CardImg top width="100%" src={staff.image} alt={staff.name} />
-              <CardBody>
-                <CardTitle>{staff.name}</CardTitle>
-                <CardText>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</CardText>
-                <CardText>Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}</CardText>
-                <CardText>Phòng ban: {staff.department.name}</CardText>
-                <CardText>Số ngày nghỉ còn lại: {staff.annualLeave}</CardText>
-                <CardText>Số ngày đã làm thêm: {staff.overTime}</CardText>
-                <CardText>Bậc lương: {staff.salaryScale}</CardText>
-              </CardBody>
-            </Card>
+        <div className="row m-3">
+          <img className="col-12 col-md-4 col-lg-3 p-1" width="100%" src={staff.image} alt={staff.name} />
+          <div className="col-12 col-md-8 col-lg-9 p-1">
+            <h2>{staff.name}</h2>
+            <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
+            <p>Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}</p>
+            <p>Phòng ban: {staff.department.name}</p>
+            <p>Số ngày nghỉ còn lại: {staff.annualLeave}</p>
+            <p>Số ngày đã làm thêm: {staff.overTime}</p>
+            <p>Bậc lương: {staff.salaryScale}</p>
           </div>
         </div>
       </div>

@@ -51,30 +51,28 @@ export default class StaffList extends Component {
     });
 
     return (
-      <div>
-        <div className='container'>
-          <div className='row m-3 justify-content-between'>
-            <div className='d-flex align-items-center'>
-              <h2>Danh sách nhân viên</h2>
-            </div>
-            <div className='d-flex align-items-center'>
-              <div className='row'>
-                <Button className='m-2' onClick={() => this.gridSelect("reset")}>Reset</Button>
-                <Button className='m-2' onClick={() => this.gridSelect("1-cols")}>1 cột</Button>
-                <Button className='m-2' onClick={() => this.gridSelect("2-cols")}>2 cột</Button>
-                <Button className='m-2' onClick={() => this.gridSelect("3-cols")}>3 cột</Button>
-                <Button className='m-2' onClick={() => this.gridSelect("4-cols")}>4 cột</Button>
-                <Button className='m-2' onClick={() => this.gridSelect("6-cols")}>6 cột</Button>
-              </div>
+      <div className='container'>
+        <div className='row m-3 justify-content-between'>
+          <div className='d-flex align-items-center'>
+            <h2>Danh sách nhân viên</h2>
+          </div>
+          <div className='d-flex align-items-center'>
+            <div className='row'>
+              <Button className='m-2' onClick={() => this.gridSelect("reset")}>Reset</Button>
+              <Button className='m-2' onClick={() => this.gridSelect("1-cols")}>1 cột</Button>
+              <Button className='m-2' onClick={() => this.gridSelect("2-cols")}>2 cột</Button>
+              <Button className='m-2' onClick={() => this.gridSelect("3-cols")}>3 cột</Button>
+              <Button className='m-2' onClick={() => this.gridSelect("4-cols")}>4 cột</Button>
+              <Button className='m-2' onClick={() => this.gridSelect("6-cols")}>6 cột</Button>
             </div>
           </div>
-          <div className='row m-3'>
-            {staff}
-          </div>
-          <div className='row m-3'>
-            <div className='col-12 d-flex align-items-center'>
-              <span>Bấm vào tên nhân viên để xem thông tin</span>
-            </div>
+        </div>
+        <div className='row m-3'>
+          {staff}
+        </div>
+        <div className='row m-3'>
+          <div className='col-12 d-flex align-items-center'>
+            <span>(*) Bấm vào tên nhân viên để xem thông tin</span>
           </div>
         </div>
       </div>
