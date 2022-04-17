@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
 import dateFormat from 'dateformat';
 import { STAFFS } from '../shared/staffs';
@@ -11,9 +10,7 @@ class RenderStaff extends Component {
 
   render() {
     let id = this.props.match.params.staffId;
-    console.log('kiểu của id là', typeof(id));
     let staff = STAFFS.find(s => s.id === parseInt(id));
-    console.log('staff tìm được là', staff);
     return (
       <div>
         <div className='row m-3'>
