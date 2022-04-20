@@ -1,81 +1,59 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardImg, CardTitle, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Button, Input, Label, InputGroupAddon, InputGroup } from 'reactstrap';
+import StaffItem from './StaffItemComponent';
 
-const defaultGrid = 'col-6 col-md-4 col-lg-2';
-
-const GRID = {
-  "1-cols": "col-12",
-  "2-cols": "col-12 col-md-6",
-  "3-cols": "col-12 col-md-4",
-  "4-cols": "col-12 col-md-4 col-lg-3",
-  "6-cols": "col-12 col-md-4 col-lg-2"
-}
-
-export default class StaffList extends Component {
+class StaffList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedStaff: null,
-      selectedGrid: defaultGrid
+      staffs: this.props.staffs,
+      inputValue: "",
     }
-  }
-  
-  staffSelect(staff) {
-    this.setState({ selectedStaff: staff });
+    this.newStaffList = this.newStaffList.bind(this);
   }
 
-  gridSelect(colNum) {
-    if (colNum === "reset") {
-      this.setState({ selectedGrid: defaultGrid });
-    } else {
-      this.setState({ selectedGrid: GRID[colNum] });
-    }
+  updateInput(evt) {
+    this.setState({ inputValue: evt.target.value });
+  }
+
+  newStaffList() {
+    const newStaffList = this.props.staffs.filter((s) => {
+      return s.name.toLowerCase().indexOf(this.state.inputValue.toLowerCase()) !== -1;
+    })
+    this.setState({ staffs: newStaffList })
   }
 
   render() {
-    const staff = this.props.staffs.map((staff) => {
-      return (
-        <div key={staff.id} className={this.state.selectedGrid}>
-          <Card className="m-2">
-            <Link to={`/staffs/${staff.id}`}>
-              <CardImg top width="100%" src={staff.image} alt={staff.name} />
-            </Link>
-            <CardBody>
-              <CardTitle className="text-center">{staff.name}</CardTitle>
-            </CardBody>
-          </Card>
-        </div>
-      );
-    });
+    const staff = this.state.staffs.map(s => {
+        return <StaffItem staff={s} key={s.id} />;
+      });
 
     return (
       <div className='container'>
+        <div className='m-3'>
+          <Label for="staff-filter">Tìm kiếm nhân viên</Label>
+          <InputGroup>
+            <Input type="text" name="staff_filter" id="staff-filter" onChange={e => this.updateInput(e)}/>
+            <InputGroupAddon addonType="append">
+              <Button onClick={this.newStaffList}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
         <div className='row m-3 justify-content-between'>
-          <div className='d-flex align-items-center'>
-            <h2>Danh sách nhân viên</h2>
-          </div>
-          <div className='d-flex align-items-center'>
-            <div className='row'>
-              <Button className='m-2' onClick={() => this.gridSelect("reset")}>Reset</Button>
-              <Button className='m-2' onClick={() => this.gridSelect("1-cols")}>1 cột</Button>
-              <Button className='m-2' onClick={() => this.gridSelect("2-cols")}>2 cột</Button>
-              <Button className='m-2' onClick={() => this.gridSelect("3-cols")}>3 cột</Button>
-              <Button className='m-2' onClick={() => this.gridSelect("4-cols")}>4 cột</Button>
-              <Button className='m-2' onClick={() => this.gridSelect("6-cols")}>6 cột</Button>
-            </div>
-          </div>
+          <h2>Danh sách nhân viên</h2>
         </div>
         <div className='row m-3'>
           {staff}
         </div>
-        <div className='row m-3'>
-          <div className='col-12 d-flex align-items-center'>
-            <span>(*) Bấm vào tên nhân viên để xem thông tin</span>
-          </div>
-        </div>
+        <div className='m-3'>(*) Bấm vào tên nhân viên để xem thông tin</div>
       </div>
     );
   }
 }
+
+export default StaffList;

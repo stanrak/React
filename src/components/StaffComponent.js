@@ -19,8 +19,10 @@ class RenderStaff extends Component {
             <h2>Thông tin nhân viên</h2>
           </div>
         </div>
-        <div className="row m-3">
-          <img className="col-12 col-md-4 col-lg-3 p-1" width="100%" src={staff.image} alt={staff.name} />
+        <div className="row m-3"> 
+          <div className="col-12 col-md-4 col-lg-3 p-1">
+            <img width="100%" src={staff.image} alt={staff.name} />
+          </div>
           <div className="col-12 col-md-8 col-lg-9 p-1">
             <h2>{staff.name}</h2>
             <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>

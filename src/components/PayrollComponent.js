@@ -1,9 +1,12 @@
 import React from "react";
 import { Alert, Card, CardBody, CardText, CardTitle } from "reactstrap";
 
+var basicSalary = 3000000;
+var overtimeSalary = 200000 / 8;
+
 const Payroll = (props) => {
   const staffSalary = props.staffs.map((s) => {
-    let salary = Math.round(s.salaryScale * 3000000 + s.overTime / 8 * 200000);
+    let salary = Math.round(s.salaryScale * basicSalary + s.overTime * overtimeSalary);
     return (
       <div key={s.id} className="col-12 col-md-6 col-lg-4 my-2">
         <Card>
