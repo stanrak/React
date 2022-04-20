@@ -1,19 +1,8 @@
 import React from 'react';
-import { Card, CardBody, CardText, CardTitle } from 'reactstrap';
+import DepartmentItem from './DepartmentItem';
 
 const DepartmentList = (props) => {
-  const department = props.departments.map(d => {
-    return (
-      <div key={d.id} className="col-12 col-md-6 col-lg-4 my-3">
-        <Card>
-          <CardBody>
-            <CardTitle>{ d.name }</CardTitle>
-            <CardText>Số lượng nhân viên: { d.numberOfStaff }</CardText>
-          </CardBody>
-        </Card>
-      </div>
-    );
-  });
+  const department = props.departments.map(d => {return <DepartmentItem key={d.id} department={d} />});
 
   return (
     <div className='container'>
