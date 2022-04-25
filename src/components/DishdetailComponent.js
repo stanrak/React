@@ -1,6 +1,14 @@
-import React from "react";
-import { Card, CardBody, CardImg, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import React, { Component } from "react";
+import {
+  Card, CardBody, CardImg, CardText, CardTitle, Breadcrumb, BreadcrumbItem,
+  Button, Modal, ModalHeader, ModalBody, CardFooter, Label, Col, Row
+} from "reactstrap";
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => (val) && (val.length >= len);
 
 function RenderDish({dish}) {
   return (
@@ -18,7 +26,7 @@ function RenderComment({comments}) {
   const customerCmt = comments.map((cmt) => {
     return (
       <div key={cmt.id}>
-        <CardText className="my-3"><blockquote className="blockquote">{cmt.comment}</blockquote></CardText>
+        <blockquote className="blockquote"><CardText className="my-3">{cmt.comment}</CardText></blockquote>
         <CardText className="my-3">- {cmt.author} | Rating: {cmt.rating} | {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmt.date)))}</CardText>
       </div>
     );
@@ -31,8 +39,93 @@ function RenderComment({comments}) {
         <CardText>All comments for this Dish</CardText>
         {customerCmt}
       </CardBody>
+      <CardFooter>
+        <CommentForm />
+      </CardFooter>
     </Card>
   );
+}
+
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModalOpen: false
+    }
+
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({ isModalOpen: !this.state.isModalOpen })
+  }
+
+  handleSubmit(values) {
+    alert("Current state is: " + JSON.stringify(values));
+  }
+
+  render() {
+    return (
+      <div>
+        <Button onClick={this.toggleModal}>
+          <span className="fa fa-info fa-lg"> Submit Comment</span>
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader>Comment</ModalHeader>
+          <ModalBody>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+              <Row className="form-group">
+                <Label htmlFor="rating" md={12}>Rating</Label>
+                <Col md={12}>
+                  <Control.select model=".rating" id="rating" name="rating" className="form-control">
+                    <option selected disabled>Choose your rating</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </Control.select>
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="author" md={12}>Your Name</Label>
+                <Col md={12}>
+                  <Control.text model=".author" id="author" name="author" placeholder="Your Name"
+                    className="form-control"
+                    validators={{required, minLength: minLength(3), maxLength: maxLength(15)}}
+                  />
+                  <Errors
+                    className='text-danger'
+                    model=".author"
+                    show="touched"
+                    messages={{
+                      required: "Required",
+                      minLength: "Must be greater than 2 characters",
+                      maxLength: "Must be 15 characters or less"
+                    }}
+                  />
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="comment" md={12}>Your Comment</Label>
+                <Col md={12}>
+                  <Control.textarea model=".comment" id="comment" name="comment" placeholder="Your comment here..."
+                    className="form-control" rows="6"
+                  />
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Col>
+                  <Button type="summit" color="primary">Submit</Button>
+                </Col>
+              </Row>
+            </LocalForm>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
 }
 
 const DishDetail = (props) => {
