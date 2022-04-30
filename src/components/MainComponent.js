@@ -17,6 +17,17 @@ class Main extends Component {
       role: ROLE,
       staffs: STAFFS
     };
+
+    this.addStaff = this.addStaff.bind(this);
+  }
+
+  // add new staff data getting from StaffList to this staff list
+  addStaff(staff) {
+    const id = Math.floor(Math.random() * 1000 + 1);
+    const newStaff = { id, ...staff };
+    this.setState({
+      staffs: [...this.state.staffs, newStaff]
+    });
   }
 
   render() {
@@ -32,7 +43,7 @@ class Main extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path="/staffs" component={() => <StaffList staffs={this.state.staffs} />} />
+          <Route exact path="/staffs" component={() => <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />} />
           <Route path="/staffs/:staffId" component={StaffWithId} />
           <Route exact path="/departments" component={() => <DepartmentList departments={this.state.departments} />} />
           <Route exact path="/payroll" component={() => <Payroll staffs={this.state.staffs} />} />
