@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Button, Input, Label, InputGroupAddon, InputGroup,
-  Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Col
+  Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Col, FormFeedback
 } from 'reactstrap';
 import StaffItem from './StaffItemComponent';
 
@@ -32,7 +32,8 @@ class StaffList extends Component {
         touched: {
           name: false,
           doB: false,
-          startDate: false
+          startDate: false,
+          department: false
         }
       }
     }
@@ -57,7 +58,7 @@ class StaffList extends Component {
   }
 
   handleSubmit() {
-    let [salaryScale, annualLeave, overTime, salary, image] = defaultInput;
+    let { salaryScale, annualLeave, overTime, salary, image } = defaultInput;
     if (this.state.newStaff.salaryScale !== "") { salaryScale = this.state.newStaff.salaryScale };
     if (this.state.newStaff.annualLeave !== "") { annualLeave = this.state.newStaff.annualLeave };
     if (this.state.newStaff.overTime !== "") { overTime = this.state.newStaff.overTime };
@@ -88,7 +89,7 @@ class StaffList extends Component {
     });
   }
 
-  validate(name, doB) {
+  validate(name, doB, startDate, department) {
     const errors = {
       name: '',
       doB: '',
@@ -96,22 +97,28 @@ class StaffList extends Component {
       department: ''
     };
 
-    if (this.state.newStaff.name && name.length < 3)
+    if (this.state.newStaff.touched.name && name.length < 3)
       errors.name = "Tên nhân viên phải nhiều hơn 3 kí tự";
     
     let date = new Date();
-    let stateDoB = new Date(this.state.newStaff.doB);
     let errorDoB = new Date(doB);
-    if (date.getFullYear() - stateDoB.getFullYear() < 18 && date.getFullYear() - errorDoB.getFullYear() < 18)
-      errors.doB = "Tuổi của nhân viên phải trên 18";
+    // check if date of birth field filled
+    if (this.state.newStaff.touched.doB) {
+      if (doB === "")
+        errors.doB = "Cần nhập thông tin"
+      else if (date.getFullYear() - errorDoB.getFullYear() < 18)
+        errors.doB = "Tuổi của nhân viên phải trên 18";
+    }
+    if (this.state.newStaff.touched.startDate && startDate === "")
+      errors.startDate = "Cần nhập thông tin";
     
-    if (this.state.newStaff.touched.department === "" || this.state.newStaff.touched.department === "choose")
-      errors.department = "Chọn Phòng ban";
+    if (this.state.newStaff.touched.department && department === "")
+      errors.department = "Cần nhập Phòng ban";
     
     return errors;
   }
 
-  renderModal() {
+  renderModal(errors) {
     return (
       <div>
         <Button className='flex' onClick={this.toggleModal}>
@@ -129,7 +136,10 @@ class StaffList extends Component {
                     value={this.state.newStaff.name}
                     onChange={this.handleInputChange}
                     onBlur={this.handleBlur('name')}
+                    valid={errors.name === ''}
+                    invalid={errors.name !== ''}
                   />
+                  <FormFeedback>{errors.name}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -139,7 +149,10 @@ class StaffList extends Component {
                     value={this.state.newStaff.doB}
                     onChange={this.handleInputChange}
                     onBlur={this.handleBlur('doB')}
+                    valid={errors.doB === ''}
+                    invalid={errors.doB !== ''}
                   />
+                  <FormFeedback>{errors.doB}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -147,8 +160,6 @@ class StaffList extends Component {
                 <Col md={8}>
                   <Input type="text" id="salaryScale" name="salaryScale"
                     placeholder="Hệ số lương"
-                    value={this.state.newStaff.salaryScale}
-                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
@@ -159,21 +170,24 @@ class StaffList extends Component {
                     value={this.state.newStaff.startDate}
                     onChange={this.handleInputChange}
                     onBlur={this.handleBlur('startDate')}
+                    valid={errors.startDate === ''}
+                    invalid={errors.startDate !== ''}
                   />
+                  <FormFeedback>{errors.startDate}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="department" md={4}>Phòng ban:</Label>
                 <Col md={8}>
-                  <Input type="select" id="department" name="department"
+                  <Input type="text" id="department" name="department"
+                    placeholder="Phòng ban"
                     value={this.state.newStaff.department}
-                    onChange={this.handleInputChange}>
-                    <option>Sale</option>
-                    <option>HR</option>
-                    <option>Marketing</option>
-                    <option>IT</option>
-                    <option>Finance</option>
-                  </Input>
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('department')}
+                    valid={errors.department === ''}
+                    invalid={errors.department !== ''}
+                  />
+                  <FormFeedback>{errors.department}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -228,7 +242,8 @@ class StaffList extends Component {
   render() {
     const staff = this.state.staffs.map(s => { return <StaffItem staff={s} key={s.id} /> });
     
-    const errors = this.validate(this.state.newStaff.name, this.state.newStaff.doB);
+    const errors = this.validate(this.state.newStaff.name, this.state.newStaff.doB,
+      this.state.newStaff.startDate, this.state.newStaff.department);
 
     return (
       <div className='container'>
@@ -245,7 +260,7 @@ class StaffList extends Component {
         </div>
         <div className='row m-3 justify-content-between'>
           <h2 className='d-flex m-0'>Danh sách nhân viên</h2>
-          {this.renderModal()}
+          {this.renderModal(errors)}
         </div>
         <div className='row m-3'>
           {staff}

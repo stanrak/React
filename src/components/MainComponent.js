@@ -23,7 +23,7 @@ class Main extends Component {
 
   // add new staff data getting from StaffList to this staff list
   addStaff(staff) {
-    const id = Math.floor(Math.random() * 1000 + 1);
+    const id = Math.floor(Math.random() * 100000 + 1);
     const newStaff = { id, ...staff };
     this.setState({
       staffs: [...this.state.staffs, newStaff]
