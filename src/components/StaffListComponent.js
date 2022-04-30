@@ -128,7 +128,7 @@ class StaffList extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader>Thêm nhân viên</ModalHeader>
           <ModalBody>
-            <Form model="staff" onSubmit={this.handleSubmit}>
+            <Form model="staff" onSubmit={staff => this.handleSubmit(staff)}>
               <FormGroup row>
                 <Label htmlFor="name" md={4}>Tên nhân viên:</Label>
                 <Col md={8}>
