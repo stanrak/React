@@ -4,19 +4,12 @@ import Footer from './FooterComponent';
 import StaffList from './StaffListComponent';
 import DepartmentList from './DepartmentListComponent';
 import Payroll from './PayrollComponent';
-import { DEPARTMENTS, ROLE, STAFFS } from '../shared/staffs';
 import { Switch, Redirect, Route } from 'react-router-dom';
 import RenderStaff from './StaffComponent';
 
 class Main extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      departments: DEPARTMENTS,
-      role: ROLE,
-      staffs: STAFFS
-    };
 
     this.addStaff = this.addStaff.bind(this);
   }

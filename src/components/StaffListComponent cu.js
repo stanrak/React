@@ -4,7 +4,6 @@ import {
   Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Col, FormFeedback
 } from 'reactstrap';
 import StaffItem from './StaffItemComponent';
-import { Control, actions } from 'react-redux-form';
 
 const defaultInput = {
   salaryScale: 1,
@@ -128,28 +127,38 @@ class StaffList extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader>Thêm nhân viên</ModalHeader>
           <ModalBody>
-            <Form model="staff" onSubmit={this.handleSubmit}>
+            <Form>
               <FormGroup row>
                 <Label htmlFor="name" md={4}>Tên nhân viên:</Label>
                 <Col md={8}>
-                  <Control.text model="name" id="name"
+                  <Input type="text" id="name" name="name"
                     placeholder="Tên nhân viên"
                     value={this.state.newStaff.name}
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('name')}
+                    valid={errors.name === ''}
+                    invalid={errors.name !== ''}
                   />
+                  <FormFeedback>{errors.name}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="doB" md={4}>Ngày sinh:</Label>
                 <Col md={8}>
-                  <Control.date model="doB" id="doB"
+                  <Input type="date" id="doB" name="doB"
                     value={this.state.newStaff.doB}
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('doB')}
+                    valid={errors.doB === ''}
+                    invalid={errors.doB !== ''}
                   />
+                  <FormFeedback>{errors.doB}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="salaryScale" md={4}>Hệ số lương:</Label>
                 <Col md={8}>
-                  <Control.text model="salaryScale" id="salaryScale"
+                  <Input type="text" id="salaryScale" name="salaryScale"
                     placeholder="Hệ số lương"
                   />
                 </Col>
@@ -157,50 +166,66 @@ class StaffList extends Component {
               <FormGroup row>
                 <Label htmlFor="startDate" md={4}>Ngày vào công ty:</Label>
                 <Col md={8}>
-                  <Control.date model="startDate" id="startDate"
+                  <Input type="date" id="startDate" name="startDate"
                     value={this.state.newStaff.startDate}
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('startDate')}
+                    valid={errors.startDate === ''}
+                    invalid={errors.startDate !== ''}
                   />
+                  <FormFeedback>{errors.startDate}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="department" md={4}>Phòng ban:</Label>
                 <Col md={8}>
-                  <Control.text model="department" id="department"
+                  <Input type="text" id="department" name="department"
                     placeholder="Phòng ban"
                     value={this.state.newStaff.department}
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('department')}
+                    valid={errors.department === ''}
+                    invalid={errors.department !== ''}
                   />
+                  <FormFeedback>{errors.department}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="annualLeave" md={4}>Số ngày nghỉ còn lại:</Label>
                 <Col md={8}>
-                  <Control.text model="annualLeave" id="annualLeave"
+                  <Input type="text" id="annualLeave" name="annualLeave"
                     placeholder="Số ngày nghỉ còn lại"
                     value={this.state.newStaff.annualLeave}
+                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="overTime" md={4}>Số giờ đã làm thêm:</Label>
                 <Col md={8}>
-                  <Control.text model="overTime" id="overTime"
+                  <Input type="text" id="overTime" name="overTime"
                     placeholder="Số giờ đã làm thêm"
                     value={this.state.newStaff.overTime}
+                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label htmlFor="salary" md={4}>Mức lương:</Label>
                 <Col md={8}>
-                  <Control.text model="salary" id="salary"
+                  <Input type="text" id="salary" name="salary"
                     placeholder="Mức lương"
                     value={this.state.newStaff.salary}
+                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
-              <Button color="secondary" type="submit">Thêm</Button>
             </Form>
           </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.handleSubmit}>Thêm</Button>{' '}
+            <Button color="secondary" onClick={this.toggleModal}>Hủy</Button>
+          </ModalFooter>
         </Modal>
       </div>
     );
