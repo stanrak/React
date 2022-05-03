@@ -70,7 +70,9 @@ class StaffList extends Component {
       doB: this.state.newStaff.doB,
       salaryScale: salaryScale,
       startDate: this.state.newStaff.startDate,
-      department: this.state.newStaff.department,
+      department: {
+        name: this.state.newStaff.department
+      },
       annualLeave: annualLeave,
       overTime: overTime,
       salary: salary,
