@@ -168,6 +168,8 @@ class StaffList extends Component {
                 <Col md={8}>
                   <Input type="text" id="salaryScale" name="salaryScale"
                     placeholder="Hệ số lương"
+                    value={this.state.newStaff.salaryScale}
+                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
