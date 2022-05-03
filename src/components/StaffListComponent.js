@@ -58,7 +58,7 @@ class StaffList extends Component {
   }
 
   handleSubmit() {
-    // for these unrequired fields, use default input value
+    // for these unrequired fields, use default value
     let { salaryScale, annualLeave, overTime, salary, image } = defaultInput;
     if (this.state.newStaff.salaryScale !== "") { salaryScale = this.state.newStaff.salaryScale };
     if (this.state.newStaff.annualLeave !== "") { annualLeave = this.state.newStaff.annualLeave };
@@ -79,7 +79,6 @@ class StaffList extends Component {
       image: image
     }
     
-    //console.log("newStaff la:", JSON.stringify(newStaff));
     this.props.onAdd(newStaff);
   }
 
@@ -126,6 +125,7 @@ class StaffList extends Component {
     return errors;
   }
 
+  // render modal with form
   renderModal(errors) {
     return (
       <div>
