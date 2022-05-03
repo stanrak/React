@@ -6,12 +6,15 @@ import { Link } from "react-router-dom";
 class RenderStaff extends Component {
   render() {
     let staff = this.props.staff;
+    
+    console.log(staff);
+
     return (
       <div className="container-fluid">
         <div className='row m-3'>
           <Breadcrumb>
             <BreadcrumbItem><Link to='/staffs'>Nhân viên</Link></BreadcrumbItem>
-            <BreadcrumbItem active>{this.props.staff.name}</BreadcrumbItem>
+            <BreadcrumbItem active>{staff.name}</BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className='row m-3'>
@@ -27,7 +30,7 @@ class RenderStaff extends Component {
             <h2>{staff.name}</h2>
             <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
             <p>Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}</p>
-            <p>Phòng ban: {staff.department.name}</p>
+            <p>Phòng ban: {staff.department}</p>
             <p>Số ngày nghỉ còn lại: {staff.annualLeave}</p>
             <p>Số giờ đã làm thêm: {staff.overTime}</p>
             <p>Hệ số lương: {staff.salaryScale}</p>

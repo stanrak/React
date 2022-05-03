@@ -58,6 +58,7 @@ class StaffList extends Component {
   }
 
   handleSubmit() {
+    // for these unrequired fields, use default input value
     let { salaryScale, annualLeave, overTime, salary, image } = defaultInput;
     if (this.state.newStaff.salaryScale !== "") { salaryScale = this.state.newStaff.salaryScale };
     if (this.state.newStaff.annualLeave !== "") { annualLeave = this.state.newStaff.annualLeave };
@@ -76,6 +77,7 @@ class StaffList extends Component {
       image: image
     };
     
+    //console.log("newStaff la:", JSON.stringify(newStaff));
     this.props.onAdd(newStaff);
   }
 
@@ -97,23 +99,27 @@ class StaffList extends Component {
       department: ''
     };
 
+    // check name field
     if (this.state.newStaff.touched.name && name.length < 3)
       errors.name = "Tên nhân viên phải nhiều hơn 3 kí tự";
     
+    // check date of birth field
     let date = new Date();
     let errorDoB = new Date(doB);
-    // check if date of birth field filled
     if (this.state.newStaff.touched.doB) {
       if (doB === "")
         errors.doB = "Cần nhập thông tin"
       else if (date.getFullYear() - errorDoB.getFullYear() < 18)
         errors.doB = "Tuổi của nhân viên phải trên 18";
     }
+
+    // check start date field
     if (this.state.newStaff.touched.startDate && startDate === "")
       errors.startDate = "Cần nhập thông tin";
     
+    // check department field
     if (this.state.newStaff.touched.department && department === "")
-      errors.department = "Cần nhập Phòng ban";
+      errors.department = "Cần nhập thông tin";
     
     return errors;
   }
@@ -231,7 +237,7 @@ class StaffList extends Component {
     );
   }
 
-  //newStaffList method: create a new staff list by user's input value, using Uncontrolled Form
+  // newStaffList method: create a new staff list by user's input value, using Uncontrolled Form
   newStaffList() {
     const newStaffList = this.props.staffs.filter((s) => {
       return s.name.toLowerCase().indexOf(this.elemt.value.toLowerCase()) !== -1;
@@ -239,11 +245,16 @@ class StaffList extends Component {
     this.setState({ staffs: newStaffList })
   }
 
+  // render
   render() {
     const staff = this.state.staffs.map(s => { return <StaffItem staff={s} key={s.id} /> });
     
-    const errors = this.validate(this.state.newStaff.name, this.state.newStaff.doB,
-      this.state.newStaff.startDate, this.state.newStaff.department);
+    const errors = this.validate(
+      this.state.newStaff.name,
+      this.state.newStaff.doB,
+      this.state.newStaff.startDate,
+      this.state.newStaff.department
+    );
 
     return (
       <div className='container'>
