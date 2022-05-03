@@ -76,8 +76,8 @@ class StaffList extends Component {
       annualLeave: annualLeave,
       overTime: overTime,
       salary: salary,
-      image: image
-    };
+      image: image,
+    }
     
     //console.log("newStaff la:", JSON.stringify(newStaff));
     this.props.onAdd(newStaff);
