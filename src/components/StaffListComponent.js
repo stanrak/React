@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Button, Input, Label, InputGroupAddon, InputGroup,
-  Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Form, Col, FormFeedback, Row
+  Modal, ModalHeader, ModalBody, Col, Row
 } from 'reactstrap';
 import StaffItem from './StaffItemComponent';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -17,6 +17,7 @@ const defaultValue = {
 const required = (val) => val;
 const minLength = (len) => (val) => (val) && (val.length >= len);
 const isNumber = (val) => !isNaN(Number(val));
+//const minAge = (val) => 
 
 class StaffList extends Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class StaffList extends Component {
 
     this.state = {
       staffs: this.props.staffs,
-      isModalOpen: false
+      isModalOpen: false,
+      doB: "",
+      startDate: ""
     }
     
     this.newStaffList = this.newStaffList.bind(this);
@@ -69,146 +72,121 @@ class StaffList extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader>Thêm nhân viên</ModalHeader>
           <ModalBody>
-            <LocalForm model="staff" onSubmit={staff => this.handleSubmit(staff)}>
-              <Row className="form-group">
+            <LocalForm onSubmit={staff => this.handleSubmit(staff)}>
+              <Row className="form-group align-items-center">
                 <Label htmlFor="name" md={4}>Tên nhân viên:</Label>
                 <Col md={8}>
-                  <Control.text model="name" id="name" name="name"
+                  <Control.text model=".name" id="name" name="name"
                     placeholder="Tên nhân viên"
-                    className="form-group"
+                    className="w-100"
                     validators={{required, minLength: minLength(3)}}
                   />
                   <Errors
                     className='text-danger'
-                    model="name"
+                    model=".name"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: "Must be greater than 2 characters"
+                      required: "Cần nhập thông tin. ",
+                      minLength: "Phải nhập nhiều hơn 2 ký tự. "
                     }}
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="doB" md={4}>Ngày sinh:</Label>
                 <Col md={8}>
-                  <Control.date model="doB" id="doB" name="doB"
-                    //value={this.state.newStaff.doB}
-                    validators={{required}}
+                  <Control.input type="date" model=".doB" id="doB" name="doB"
+                    value={this.state.doB}
+                    className="w-100"
+                    validators={{ required }}
+                    onChange={e => this.setState({ doB: e.target.value })}
                   />
                   <Errors
                     className='text-danger'
-                    model="doB"
+                    model=".doB"
                     show="touched"
                     messages={{
-                      required: "Required"
+                      required: "Cần nhập thông tin. "
                     }}
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="salaryScale" md={4}>Hệ số lương:</Label>
                 <Col md={8}>
-                  <Control.text model="salaryScale" id="salaryScale" name="salaryScale"
+                  <Control.text model=".salaryScale" id="salaryScale" name="salaryScale"
                     placeholder="Hệ số lương"
-                    validators={{isNumber}}
-                  />
-                  <Errors
-                    className='text-danger'
-                    model="salaryScale"
-                    show="touched"
-                    messages={{
-                      isNumber: "Must be a number"
-                    }}
+                    className="w-100"
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="startDate" md={4}>Ngày vào công ty:</Label>
                 <Col md={8}>
-                  <Control.date model="startDate" id="startDate" name="startDate"
-                    //value={this.state.newStaff.startDate}
-                    validators={{required}}
+                  <Control.input type="date" model=".startDate" id="startDate" name="startDate"
+                    value={this.state.startDate}
+                    className="w-100"
+                    validators={{ required }}
+                    onChange={e => this.setState({ startDate: e.target.value })}
                   />
                   <Errors
                     className='text-danger'
-                    model="startDate"
+                    model=".startDate"
                     show="touched"
                     messages={{
-                      required: "Required"
+                      required: "Cần nhập thông tin. "
                     }}
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="department" md={4}>Phòng ban:</Label>
                 <Col md={8}>
-                  <Control.text model="department" id="department" name="department"
+                  <Control.text model=".department" id="department" name="department"
                     placeholder="Phòng ban"
+                    className="w-100"
                     validators={{required}}
                   />
                   <Errors
                     className='text-danger'
-                    model="department"
+                    model=".department"
                     show="touched"
                     messages={{
-                      required: "Required"
+                      required: "Cần nhập thông tin. "
                     }}
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="annualLeave" md={4}>Số ngày nghỉ còn lại:</Label>
                 <Col md={8}>
-                  <Control.text model="annualLeave" id="annualLeave" name="annualLeave"
+                  <Control.text model=".annualLeave" id="annualLeave" name="annualLeave"
                     placeholder="Số ngày nghỉ còn lại"
-                    validators={{isNumber}}
-                  />
-                  <Errors
-                    className='text-danger'
-                    model="annualLeave"
-                    show="touched"
-                    messages={{
-                      isNumber: "Must be a number"
-                    }}
+                    className="w-100"
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="overTime" md={4}>Số giờ đã làm thêm:</Label>
                 <Col md={8}>
-                  <Control.text model="overTime" id="overTime" name="overTime"
+                  <Control.text model=".overTime" id="overTime" name="overTime"
                     placeholder="Số giờ đã làm thêm"
-                    validators={{isNumber}}
-                  />
-                  <Errors
-                    className='text-danger'
-                    model="overTime"
-                    show="touched"
-                    messages={{
-                      isNumber: "Must be a number"
-                    }}
+                    className="w-100"
                   />
                 </Col>
               </Row>
-              <Row className="form-group">
+              <Row className="form-group align-items-center">
                 <Label htmlFor="salary" md={4}>Mức lương:</Label>
                 <Col md={8}>
-                  <Control.text model="salary" id="salary" name="salary"
+                  <Control.text model=".salary" id="salary" name="salary"
                     placeholder="Mức lương"
-                    validators={{isNumber}}
-                  />
-                  <Errors
-                    className='text-danger'
-                    model="salary"
-                    show="touched"
-                    messages={{
-                      isNumber: "Must be a number"
-                    }}
+                    className="w-100"
                   />
                 </Col>
               </Row>
-              <Button color="secondary" type="submit">Thêm</Button>
+              <Row className="form-group justify-content-center">
+                <Button color="secondary" type="submit">Thêm</Button>
+              </Row>
             </LocalForm>
           </ModalBody>
         </Modal>
