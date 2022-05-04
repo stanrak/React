@@ -63,6 +63,7 @@ class StaffList extends Component {
     this.props.onAdd(newStaff);
   }
 
+  // render modal with redux form and validation
   renderModal() {
     return (
       <div>
@@ -202,6 +203,7 @@ class StaffList extends Component {
     this.setState({ staffs: newStaffList })
   }
 
+  // render
   render() {
     const staff = this.state.staffs.map(s => { return <StaffItem staff={s} key={s.id} /> });
     
