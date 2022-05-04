@@ -19,23 +19,26 @@ const mapStateToProps = state => {
 class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      staffs: this.props.staffs
+    }
 
-    //this.addStaff = this.addStaff.bind(this);
+    this.addStaff = this.addStaff.bind(this);
   }
 
   // add new staff data getting from StaffList to this staff list
-  // addStaff(staff) {
-  //   const id = Math.floor(Math.random() * 100000 + 1);
-  //   const newStaff = { id, ...staff };
-  //   this.setState({
-  //     staffs: [...this.state.staffs, newStaff]
-  //   });
-  // }
+  addStaff(staff) {
+    const id = Math.floor(Math.random() * 100000 + 1);
+    const newStaff = { id, ...staff };
+    this.setState({
+      staffs: [...this.state.staffs, newStaff]
+    });
+  }
 
   render() {
     const StaffWithId = ({match}) => {
       const id = match.params.staffId;
-      const staff = this.props.staffs.find(s => s.id === parseInt(id,10));
+      const staff = this.state.staffs.find(s => s.id === parseInt(id,10));
       return (
         <RenderStaff staff={staff}/>
       );
@@ -45,10 +48,10 @@ class Main extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path="/staffs" component={() => <StaffList staffs={this.props.staffs} />} />
+          <Route exact path="/staffs" component={() => <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />} />
           <Route path="/staffs/:staffId" component={StaffWithId} />
-          <Route exact path="/departments" component={() => <DepartmentList departments={this.props.departments} />} />
-          <Route exact path="/payroll" component={() => <Payroll staffs={this.props.staffs} />} />
+          <Route exact path="/departments" component={() => <DepartmentList departments={this.state.departments} />} />
+          <Route exact path="/payroll" component={() => <Payroll staffs={this.state.staffs} />} />
           <Redirect to="/staffs" />
         </Switch>
         <Footer />
@@ -58,5 +61,3 @@ class Main extends Component {
 }
 
 export default withRouter(connect(mapStateToProps)(Main));
-
-//onAdd={this.addStaff} 

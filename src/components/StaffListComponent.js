@@ -14,10 +14,8 @@ const defaultValue = {
   image: '/assets/images/alberto.png'
 }
 
-const required = (val) => val;
-const minLength = (len) => (val) => (val) && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-//const minAge = (val) => 
+const required = val => val;
+const minLength = len => val => val && val.length >= len;
 
 class StaffList extends Component {
   constructor(props) {
@@ -40,27 +38,29 @@ class StaffList extends Component {
   }
 
   handleSubmit(values) {
-    console.log("Current state is: " + JSON.stringify(values));
-    alert("Current state is: " + JSON.stringify(values));
-    // let { salaryScale, annualLeave, overTime, salary, image } = defaultInput;
-    // if (this.state.newStaff.salaryScale !== "") { salaryScale = this.state.newStaff.salaryScale };
-    // if (this.state.newStaff.annualLeave !== "") { annualLeave = this.state.newStaff.annualLeave };
-    // if (this.state.newStaff.overTime !== "") { overTime = this.state.newStaff.overTime };
-    // if (this.state.newStaff.salary !== "") { salary = this.state.newStaff.salary };
+    // for these unrequired fields, use default value
+    let { salaryScale, annualLeave, overTime, salary, image } = defaultValue;
+    if (values.salaryScale !== undefined) { salaryScale = values.salaryScale };
+    if (values.annualLeave !== undefined) { annualLeave = values.annualLeave };
+    if (values.overTime !== undefined) { overTime = values.overTime };
+    if (values.salary !== undefined) { salary = values.salary };
 
-    // const newStaff = {
-    //   name: this.state.newStaff.name,
-    //   doB: this.state.newStaff.doB,
-    //   salaryScale: salaryScale,
-    //   startDate: this.state.newStaff.startDate,
-    //   department: this.state.newStaff.department,
-    //   annualLeave: annualLeave,
-    //   overTime: overTime,
-    //   salary: salary,
-    //   image: image
-    // };
+    const newStaff = {
+      name: values.name,
+      doB: values.doB,
+      salaryScale: salaryScale,
+      startDate: values.startDate,
+      department: {
+        name: values.department
+      },
+      annualLeave: annualLeave,
+      overTime: overTime,
+      salary: salary,
+      image: image
+    };
     
-    // this.props.onAdd(newStaff);
+    console.log(newStaff);
+    this.props.onAdd(newStaff);
   }
 
   renderModal() {
