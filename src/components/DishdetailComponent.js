@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -14,23 +15,27 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
 
 function RenderDish({dish}) {
   return (
-    <Card>
-      <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-      <CardBody>
-        <CardTitle>{dish.name}</CardTitle>
-        <CardText>{dish.description}</CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
+      <Card>
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+        <CardBody>
+          <CardTitle>{dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+        </CardBody>
+      </Card>
+    </FadeTransform>
   );
 }
 
 function RenderComment({comments, postComment, dishId}) {
   const customerCmt = comments.map((cmt) => {
     return (
-      <div key={cmt.id}>
-        <blockquote className="blockquote"><CardText className="my-3">{cmt.comment}</CardText></blockquote>
-        <CardText className="my-3">- {cmt.author} | Rating: {cmt.rating} | {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmt.date)))}</CardText>
-      </div>
+      <Fade key={cmt.id} in>
+        <div >
+          <blockquote className="blockquote"><CardText className="my-3">{cmt.comment}</CardText></blockquote>
+          <CardText className="my-3">- {cmt.author} | Rating: {cmt.rating} | {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmt.date)))}</CardText>
+        </div>
+      </Fade>
     );
   });
 
@@ -39,7 +44,9 @@ function RenderComment({comments, postComment, dishId}) {
       <CardBody>
         <CardTitle>Comments</CardTitle>
         <CardText>All comments for this Dish</CardText>
-        {customerCmt}
+        <Stagger in>
+          {customerCmt}
+        </Stagger>
       </CardBody>
       <CardFooter>
         <CommentForm dishId={dishId} postComment={postComment} />
