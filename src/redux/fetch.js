@@ -3,7 +3,6 @@ import { staffsFetchLoading, staffsFetchSuccess, staffsFetchError } from './Acti
 import { departmentsFetchLoading, departmentsFetchSuccess, departmentsFetchError } from './ActionCreator';
 import { staffsInDeptFetchLoading, staffsInDeptFetchSuccess, staffsInDeptFetchError } from './ActionCreator';
 import { salariesFetchLoading, salariesFetchSuccess, salariesFetchError } from './ActionCreator';
-import { staffsPostLoading, staffsPostSuccess, staffsPostError } from './ActionCreator';
 
 // fetch Staffs from API
 export const fetchStaffs = () => dispatch => {
@@ -37,7 +36,6 @@ export const fetchDepartments = () => dispatch => {
 
 // fetch Staffs in a Department from API
 export const fetchStaffsInDept = (id) => {
-  console.log("id cua fetch: ", id);
   return dispatch => {
     dispatch(staffsInDeptFetchLoading());
 
@@ -65,26 +63,5 @@ export const fetchSalaries = () => dispatch => {
     })
     .catch(error => {
       dispatch(salariesFetchError(error));
-    });
-}
-
-// post Staffs to API
-export const postStaffs = (staffs) => dispatch => {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: staffs
-  };
-
-  dispatch(staffsPostLoading());
-
-  fetch(baseUrl + 'staffs', requestOptions)
-    .then(res => res.json)
-    .then(res => {
-      dispatch(staffsPostSuccess(res));
-      return res.addStaffs;
-    })
-    .catch(error => {
-      dispatch(staffsPostError(error));
     });
 }

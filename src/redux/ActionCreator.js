@@ -64,18 +64,8 @@ export const salariesFetchError = (err) => ({
   payload: err
 });
 
-// post Staffs
-
-export const staffsPostLoading = () => ({
-  type: ActionTypes.STAFFS_POST_LOADING
-});
-
-export const staffsPostSuccess = (addStaffs) => ({
-  type: ActionTypes.STAFFS_POST_SUCCESS,
-  payload: addStaffs
-});
-
-export const staffsPostError = (err) => ({
-  type: ActionTypes.STAFFS_POST_ERROR,
-  payload: err
-});
+// change staffs to make a new staff list
+export const staffsNewList = (input) => ({
+  type: ActionTypes.STAFFS_NEW_LIST,
+  payload: input
+})

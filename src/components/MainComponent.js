@@ -9,17 +9,6 @@ import RenderDepartment from './DepartmentComponent';
 import { Switch, Redirect, Route, withRouter } from 'react-router-dom';
 
 class Main extends Component {
-  // add new staff data getting from StaffList to this staff list
-  // addStaff(staff) {
-  //   const id = Math.floor(Math.random() * 100000 + 1);
-  //   const newStaff = { id, ...staff };
-  //   this.setState({
-  //     staffs: [...this.state.staffs, newStaff]
-  //   });
-  // }
-
-  // fetch staffs and departments's data
-
   render() {
     const StaffWithId = ({match}) => {
       return (
